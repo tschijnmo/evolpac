@@ -36,20 +36,25 @@ def evolve(
     pop = []
     if init is not None:
         pop.extend(init)
-    for _ in range(pop_size - len(pop)):
-        pop.append(gen_random_gene(gene_length, selection=gene_bits))
-        continue
+    pop.extend(
+        gen_random_gene(gene_length, selection=gene_bits)
+        for _ in range(pop_size - len(pop))
+    )
 
-    # Evolution main loop.
+    # Convert the ratios to integral numbers.
     select_num = int(pop_size * select_ratio)
     new_num = int(pop_size * new_ratio)
     breed_new_num = int(pop_size * breed_new_ratio)
+    desc_pairs_num, rem = divmod(pop_size - select_num - new_num, 2)
+    select_num += rem
+
+    # Evolution main loop.
     for step_idx in range(total_steps):
 
         # Compute scores.
         pop_w_score = score_cb(pop)
         pop_w_score.sort(
-            key=operator.itemgetter(0), reversed=True
+            key=operator.itemgetter(0), reverse=True
         )  # Skip genes for performance.
 
         # Select and output.
@@ -61,18 +66,20 @@ def evolve(
             )
 
         # Add the new blood.
-        for _ in range(new_num):
-            pop.append(gen_random_gene(gene_length, selection=gene_bits))
-            continue
+        pop.extend(
+            gen_random_gene(gene_length, selection=gene_bits)
+            for _ in range(new_num)
+        )
 
         # Breed.
         parents = pop[0:select_num + breed_new_num]
-        for _ in range(pop_size - len(pop)):
+        for _ in range(desc_pairs_num):
             parent1, parent2 = random.sample(parents, 2)
-            desc = cross(parent1, parent2, n_pts=n_cross_pts)
-            if random.random() < mutate_prob:
-                mutate(desc, n_pts=n_mutate_pts, selection=gene_bits)
-            pop.append(desc)
+            descs = cross(parent1, parent2, n_pts=n_cross_pts)
+            for i in descs:
+                if random.random() < mutate_prob:
+                    mutate(i, n_pts=n_mutate_pts, selection=gene_bits)
+            pop.extend(descs)
 
         continue
 
