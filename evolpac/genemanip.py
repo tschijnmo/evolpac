@@ -38,14 +38,16 @@ def cross(gene1, gene2, n_pts=1):
 
 
 def mutate(gene, n_pts=1, selection=(0, 1, 2, 3)):
-    """Mutate the given gene by uniform selection."""
+    """Mutate the given gene by uniform selection.
 
-    res = list(gene)
+    Note that this subroutine directly manipulates the gene.
+    """
+
     pts = random.sample(range(len(gene)), n_pts)
     for i in pts:
-        res[i] = random.choice(selection)
+        gene[i] = random.choice(selection)
         continue
-    return res
+    return gene
 
 
 def gen_random_gene(length, selection=(0, 1, 2, 3)):
