@@ -46,3 +46,13 @@ def mutate(gene, n_pts=1, selection=(0, 1, 2, 3)):
         res[i] = random.choice(selection)
         continue
     return res
+
+
+def gen_random_gene(length, selection=(0, 1, 2, 3)):
+    """Generate a random gene."""
+
+    res = []
+    for i in range(0, length):
+        res.append(random.choice(selection))
+        continue
+    return res
