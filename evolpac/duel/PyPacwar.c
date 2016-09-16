@@ -16,7 +16,7 @@ static PyMethodDef module_methods[] = {
 
 PyMODINIT_FUNC init_PyPacwar(void)
 {
-    PyObject *m = Py_InitModule3("evolpac._PyPacwar", module_methods, module_docstring);
+    PyObject *m = Py_InitModule3("evolpac.duel._PyPacwar", module_methods, module_docstring);
     if (m == NULL)
         return;
 
