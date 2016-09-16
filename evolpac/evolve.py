@@ -11,7 +11,7 @@ from .genemanip import gen_random_gene, cross, mutate
 
 def evolve(
         pop_size, total_steps, score_cb, init=None,
-        gene_length=40, gene_bits=(0, 1, 2, 3),
+        gene_length=50, gene_bits=(0, 1, 2, 3),
         select_ratio=0.4, new_ratio=0.1, breed_new_ratio=0.05,
         mutate_prob=0.001, n_cross_pts=1, n_mutate_pts=1,
         out_prefix='evolution', out_num=20, out_steps=1000, eval_cb=None
