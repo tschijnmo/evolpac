@@ -60,7 +60,7 @@ def run_tournament_(genes):
     """
 
     n_genes = len(genes)
-    scores = np.zeros(n_genes, dtype=np.uint)
+    scores = np.zeros(n_genes, dtype=np.uint32)
     for i, j in itertools.combinations(range(n_genes), 2):
         s_i, s_j = run_duel(genes[i], genes[j])
         scores[i] += s_i
