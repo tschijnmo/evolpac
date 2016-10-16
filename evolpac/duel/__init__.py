@@ -6,7 +6,7 @@ import itertools
 import numpy as np
 
 from .duel import battle
-from .tournament import run_tournament
+from .tournament import run_tournament as _run_tournament
 
 
 def run_duel(gene1, gene2):
@@ -68,10 +68,12 @@ def run_tournament_(genes):
         scores[j] += s_j
         continue
 
-    return scores
+    return scores / (n_genes - 1)
 
 
-run_tournament = run_tournament  # Just for linter.
+def run_tournament(genes):
+    """Run tournament among the given genes."""
+    return _run_tournament(genes) / (len(genes) - 1)
 
 
 def compute_ave_score_w_sample(genes, samples):
