@@ -11,6 +11,7 @@ tournament = Extension(
     "evolpac.duel.tournament",
     ["evolpac/duel/tournament.c", "evolpac/duel/PacWarGuts.c"],
     include_dirs=numpy_includes,
+    extra_compile_args=[]
 )
 
 setup(
