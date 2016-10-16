@@ -1,5 +1,6 @@
 """Duelling between PAC-mites."""
 
+import functools
 import itertools
 
 import numpy as np
@@ -86,3 +87,8 @@ def compute_ave_score_w_sample(genes, samples):
         continue
 
     return scores / len(samples)
+
+
+def eval_w_sample(samples):
+    """Form call-back to evaluate genes by tournament with a sample."""
+    return functools.partial(compute_ave_score_w_sample, samples=samples)
