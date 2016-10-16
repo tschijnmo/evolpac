@@ -5,7 +5,8 @@ import unittest
 import numpy as np
 
 from evolpac.duel.duel import battle
-from evolpac.duel import run_duel, run_tournament
+from evolpac.duel import run_duel, run_tournament, run_tournament_
+from evolpac.genemanip import gen_random_gene
 
 class CoreTest(unittest.TestCase):
     """Tests for the core C extension."""
@@ -28,4 +29,18 @@ class CoreTest(unittest.TestCase):
 
         for i in range(0, 2):
             self.assertEqual(duel_res[i], tour_res[i])
+
+    def test_tour(self):
+        """Tests the C and Python version of tournament."""
+        n_genes = 10
+        genes = np.array(
+            [gen_random_gene() for _ in range(n_genes)],
+            dtype=np.byte
+        )
+
+        c_res = run_tournament(genes)
+        python_res = run_tournament_(genes)
+        diff = c_res - python_res
+
+        self.assertFalse(diff.any())
 
