@@ -1,9 +1,10 @@
 """Duelling between PAC-mites."""
 
-from ._PyPacwar import battle
+from .duel import battle
+from .tournament import run_tournament
 
 
-def duel(gene1, gene2):
+def run_duel(gene1, gene2):
     """Perform duel between the two given genes.
 
     The score for them will be returned according to the course website_.
