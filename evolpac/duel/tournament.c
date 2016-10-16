@@ -9,6 +9,7 @@ typedef signed char PacBits;
 static const int PACBIT_TYPE = NPY_BYTE;
 typedef unsigned int Score;
 static const int SCORE_TYPE = NPY_UINT;
+static const int GENE_LEN = 50;
 
 
 /*
@@ -89,14 +90,14 @@ run_tour_core(int n_pacs, PacBits *pacs_array, Score *res_array)
     #pragma omp parallel for private(scores) schedule(static)
     for (i = 0; i < n_pacs; i++) {
         for (j = i % 2; j < i; j += 2) {
-            run_duel(pacs_array + i * n_pacs, pacs_array + j * n_pacs, scores);
+            run_duel(pacs_array + i * GENE_LEN, pacs_array + j * GENE_LEN, scores);
             #pragma omp atomic
             res_array[i] += scores[0];
             #pragma omp atomic
             res_array[j] += scores[1];
         }
         for (j = i + 1; j < n_pacs; j += 2) {
-            run_duel(pacs_array + i * n_pacs, pacs_array + j * n_pacs, scores);
+            run_duel(pacs_array + i * GENE_LEN, pacs_array + j * GENE_LEN, scores);
             #pragma omp atomic
             res_array[i] += scores[0];
             #pragma omp atomic
