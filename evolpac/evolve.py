@@ -39,7 +39,7 @@ def evolve(
 
     # Population initialization.
     pop = np.empty((pop_size, GENE_LENGTH), dtype=GENE_DT)
-    if init is not None:
+    if init is None:
         init = []
     for i, j in itertools.zip_longest(range(pop_size), init):
         pop[i] = j if j is not None else gen_random_gene()
@@ -104,8 +104,13 @@ def _dump_pop(pop, scores, file_name, eval_cb=None):
         evals = eval_cb(pop)
 
     res = [
-        {'gene': i, 'score': j, 'eval': k}
-        for i, j, k in zip(pop, scores, evals)
+        {
+            'gene': list(int(i) for i in gen),
+            'gene_str': ''.join(str(i) for i in gen),
+            'score': float(sco),
+            'eval': float(eva)
+        }
+        for gen, sco, eva in zip(pop, scores, evals)
         ]
 
     with open(file_name + '.json', 'w') as out_fp:
