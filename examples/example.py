@@ -1,8 +1,6 @@
 """A simple example for the optimization of the killer PAC-mite."""
 
-import functools
-
-from evolpac.avescore import compute_cross_ave_score, compute_ave_score_w_sample
+from evolpac.duel import run_tournament, eval_w_sample
 from evolpac.evolve import evolve
 from evolpac.genemanip import gen_random_gene
 
@@ -10,11 +8,10 @@ from evolpac.genemanip import gen_random_gene
 def main():
     """The main driver."""
 
-    eval_sample = [gen_random_gene(50) for _ in range(5)]
+    eval_sample = [gen_random_gene() for _ in range(5)]
 
-    evolve(100, 100, compute_cross_ave_score, eval_cb=functools.partial(
-        compute_ave_score_w_sample, samples=eval_sample
-    ))
+    evolve(100, 5000, run_tournament, eval_cb=eval_w_sample(eval_sample),
+           out_steps=100)
 
 
 if __name__ == '__main__':
