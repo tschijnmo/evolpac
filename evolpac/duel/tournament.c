@@ -220,7 +220,7 @@ static struct PyModuleDef_Slot tour_slots[] = {
 
 static struct PyModuleDef tour_module = {
     PyModuleDef_HEAD_INIT,
-    "evolpac.tournament",
+    "evolpac.duel.tournament",
     tour__doc__,
     0,
     tour_methods,
