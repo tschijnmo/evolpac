@@ -9,20 +9,41 @@ static char battle_docstring[] =
 
 static PyObject *battle_PyPacwar(PyObject *self, PyObject *args);
 
-static PyMethodDef module_methods[] = {
+static PyMethodDef duel_methods[] = {
     {"battle", battle_PyPacwar, METH_VARARGS, battle_docstring},
     {NULL, NULL, 0, NULL}
 };
 
-PyMODINIT_FUNC init_PyPacwar(void)
+static int
+duel_exec(PyObject *m)
 {
-    PyObject *m = Py_InitModule3("evolpac.duel._PyPacwar", module_methods, module_docstring);
-    if (m == NULL)
-        return;
-
-    /* Load `numpy` functionality. */
     import_array();
+    return 0;
 }
+
+static struct PyModuleDef_Slot duel_slots[] = {
+    {Py_mod_exec, duel_exec},
+    {0, NULL},
+};
+
+static struct PyModuleDef duel_module = {
+    PyModuleDef_HEAD_INIT,
+    "evolpac.duel.duel",
+    module_docstring,
+    0,
+    duel_methods,
+    duel_slots,
+    NULL,
+    NULL,
+    NULL
+};
+
+PyMODINIT_FUNC
+PyInit_duel(void)
+{
+    return PyModuleDef_Init(&duel_module);
+}
+
 
 static PyObject *battle_PyPacwar(PyObject *self, PyObject *args)
 {
