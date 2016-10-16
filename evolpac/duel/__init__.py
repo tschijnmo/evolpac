@@ -1,5 +1,9 @@
 """Duelling between PAC-mites."""
 
+import itertools
+
+import numpy as np
+
 from .duel import battle
 from .tournament import run_tournament
 
@@ -47,3 +51,20 @@ def run_duel(gene1, gene2):
         return win_p, los_p
     else:
         return los_p, win_p
+
+
+def run_tournament_(genes):
+    """Run tournaments in Python.
+
+    This is a poor man's version of tournament mainly for testing purpose.
+    """
+
+    n_genes = len(genes)
+    scores = np.zeros(n_genes, dtype=np.uint)
+    for i, j in itertools.combinations(range(n_genes), 2):
+        s_i, s_j = run_duel(genes[i], genes[j])
+        scores[i] += s_i
+        scores[j] += s_j
+        continue
+
+    return scores
