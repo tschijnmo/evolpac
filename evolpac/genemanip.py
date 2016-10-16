@@ -2,6 +2,16 @@
 
 import random
 
+import numpy as np
+import numpy.random as nprandom
+
+
+GENE_LOW = 0
+GENE_HIGH = 4
+GENE_BITS = (0, 1, 2, 3)
+GENE_LENGTH = 50
+GENE_DT = np.byte
+
 
 def cross(gene1, gene2, n_pts=1):
     """Crosses two genes over by the given number of points.
@@ -9,12 +19,12 @@ def cross(gene1, gene2, n_pts=1):
     The crossover points will be randomly selected.
     """
 
-    size = len(gene1)
-    assert len(gene2) == size
+    assert len(gene1) == GENE_LENGTH
+    assert len(gene2) == GENE_LENGTH
 
-    points = random.sample(range(size), n_pts)
+    points = random.sample(range(GENE_LENGTH), n_pts)
     points.sort()
-    points.append(size)
+    points.append(GENE_LENGTH)
 
     res1 = []
     res2 = []
@@ -25,7 +35,7 @@ def cross(gene1, gene2, n_pts=1):
     next_cross = points[cross_idx]
 
     # The first is always kept in place, since swapping them is pointless.
-    for i in range(0, size):
+    for i in range(0, GENE_LENGTH):
         curr1.append(gene1[i])
         curr2.append(gene2[i])
         if i == next_cross:
@@ -37,7 +47,7 @@ def cross(gene1, gene2, n_pts=1):
     return res1, res2
 
 
-def mutate(gene, n_pts=1, selection=(0, 1, 2, 3)):
+def mutate(gene, n_pts=1):
     """Mutate the given gene by uniform selection.
 
     Note that this subroutine directly manipulates the gene.
@@ -45,16 +55,13 @@ def mutate(gene, n_pts=1, selection=(0, 1, 2, 3)):
 
     pts = random.sample(range(len(gene)), n_pts)
     for i in pts:
-        gene[i] = random.choice(selection)
+        gene[i] = random.choice(GENE_BITS)
         continue
     return gene
 
 
-def gen_random_gene(length, selection=(0, 1, 2, 3)):
+def gen_random_gene():
     """Generate a random gene."""
-
-    res = []
-    for i in range(0, length):
-        res.append(random.choice(selection))
-        continue
-    return res
+    return nprandom.randint(
+        GENE_LOW, GENE_HIGH, size=GENE_LENGTH, dtype=GENE_DT
+    )
