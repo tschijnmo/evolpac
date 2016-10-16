@@ -229,3 +229,11 @@ static struct PyModuleDef tour_module = {
     NULL,
     NULL
 };
+
+
+PyMODINIT_FUNC
+PyInit_tournament(void)
+{
+    return PyModuleDef_Init(&tour_module);
+}
+
