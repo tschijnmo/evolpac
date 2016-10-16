@@ -1,5 +1,6 @@
 #include<Python.h>
 #include<numpy/arrayobject.h>
+#include<stdio.h>
 
 #include"PacWar.h"
 
@@ -86,7 +87,7 @@ run_tour_core(int n_pacs, PacBits *pacs_array, Score *res_array)
     Score scores[2];
 
     for (i = 0; i < n_pacs; i++) {
-        for (j = 0; j < i; i++) {
+        for (j = 0; j < i; j++) {
             run_duel(pacs_array + i * n_pacs, pacs_array + j * n_pacs, scores);
             res_array[i] += scores[0];
             res_array[j] += scores[1];
