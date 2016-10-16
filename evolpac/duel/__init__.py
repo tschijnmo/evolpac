@@ -68,3 +68,21 @@ def run_tournament_(genes):
         continue
 
     return scores
+
+
+run_tournament = run_tournament  # Just for linter.
+
+
+def compute_ave_score_w_sample(genes, samples):
+    """Computes the average score for duelling with a random sample."""
+
+    scores = np.zeros(len(genes), dtype=np.uint32)
+
+    for i, v in enumerate(genes):
+        for j in samples:
+            score, _ = run_duel(v, j)
+            scores[i] += score
+            continue
+        continue
+
+    return scores / len(samples)
