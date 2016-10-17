@@ -8,13 +8,17 @@ import argparse
 LINE_FORMAT = '{gene:^50} {weight:>6} {score:>7} {eval:>7}'
 
 
-def vizres(fp):
-    """Print the results in JSON file prettily."""
+def vizres(fps):
+    """Print the results in JSON files prettily."""
 
-    res = json.load(fp)
+    uniq = {}
+    weights = collections.Counter()
 
-    uniq = {i['gene_str']: i for i in res}
-    weights = collections.Counter(i['gene_str'] for i in res)
+    for fp in fps:
+        res = json.load(fp)
+        uniq.update((i['gene_str'], i) for i in res)
+        weights.update(i['gene_str'] for i in res)
+        continue
 
     print(LINE_FORMAT.format(
         gene='Gene', weight='Weight', score='Score', eval='Eval'
@@ -32,8 +36,8 @@ def main():
     """The main driver function."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        'input', type=argparse.FileType('r'),
-        metavar='FILE', help='The JSON file from evoluation.'
+        'input', type=argparse.FileType('r'), nargs='+',
+        metavar='FILEs', help='The JSON files from evoluation.'
     )
     args = parser.parse_args()
 
