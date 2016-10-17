@@ -82,26 +82,28 @@ static void run_duel(PacBits *pac1, PacBits *pac2, Score *scores)
  */
 
 static void 
-run_tour_core(int n_pacs, PacBits *pacs_array, Score *res_array)
+run_tour_core(int n_pacs, PacBits *pacs, Score *total_scores)
 {
     int i, j;
     Score scores[2];
 
-    #pragma omp parallel for private(scores) schedule(static)
+    #pragma omp parallel for \
+    default(shared) private(scores, i, j) \
+    schedule(static)
     for (i = 0; i < n_pacs; i++) {
         for (j = i % 2; j < i; j += 2) {
-            run_duel(pacs_array + i * GENE_LEN, pacs_array + j * GENE_LEN, scores);
+            run_duel(pacs + i * GENE_LEN, pacs + j * GENE_LEN, scores);
             #pragma omp atomic
-            res_array[i] += scores[0];
+            total_scores[i] += scores[0];
             #pragma omp atomic
-            res_array[j] += scores[1];
+            total_scores[j] += scores[1];
         }
         for (j = i + 1; j < n_pacs; j += 2) {
-            run_duel(pacs_array + i * GENE_LEN, pacs_array + j * GENE_LEN, scores);
+            run_duel(pacs + i * GENE_LEN, pacs + j * GENE_LEN, scores);
             #pragma omp atomic
-            res_array[i] += scores[0];
+            total_scores[i] += scores[0];
             #pragma omp atomic
-            res_array[j] += scores[1];
+            total_scores[j] += scores[1];
         }
     }
 
