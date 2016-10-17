@@ -25,7 +25,9 @@ def vizres(fps):
     ))
     for i, j in uniq.items():
         print(LINE_FORMAT.format(
-            gene=i, weight=weights[i], score=j['score'], eval=j['eval']
+            gene=i, weight=weights[i],
+            score='{:.3}'.format(j['score']),
+            eval='{:.3}'.format(j['eval'])
         ))
     print('')
 
