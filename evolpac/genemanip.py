@@ -65,3 +65,11 @@ def gen_random_gene():
     return nprandom.randint(
         GENE_LOW, GENE_HIGH, size=GENE_LENGTH, dtype=GENE_DT
     )
+
+
+def get_gene_from_str(s):
+    """Generates a gene value from a string."""
+    res = [int(i) for i in s]
+    assert len(res) == GENE_LENGTH
+    assert all(GENE_LOW <= i and i < GENE_HIGH for i in res)
+    return res
