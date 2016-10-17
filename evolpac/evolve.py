@@ -117,3 +117,10 @@ def _dump_pop(pop, scores, file_name, eval_cb=None):
         json.dump(res, out_fp)
 
     return None
+
+
+def read_genes(filename):
+    """Get genes for population initialization from JSON file."""
+    with open(filename, 'r') as fp:
+        content = json.load(fp)
+    return [i['gene'] for i in content]
