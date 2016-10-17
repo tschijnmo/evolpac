@@ -3,9 +3,10 @@
 import json
 import collections
 import argparse
+import hashlib
 
 
-LINE_FORMAT = '{gene:^50} {weight:>6} {score:>7} {eval:>7}'
+LINE_FORMAT = '{digest:6} {gene:^50} {weight:>6} {score:>7} {eval:>7}'
 
 
 def vizres(fps):
@@ -21,10 +22,12 @@ def vizres(fps):
         continue
 
     print(LINE_FORMAT.format(
-        gene='Gene', weight='Weight', score='Score', eval='Eval'
+        digest='Digest', gene='Gene', weight='Weight',
+        score='Score', eval='Eval'
     ))
     for i, j in uniq.items():
         print(LINE_FORMAT.format(
+            digest=_hash_gene(j['gene']),
             gene=i, weight=weights[i],
             score='{:.3f}'.format(j['score']),
             eval='{:.3f}'.format(j['eval'])
@@ -32,6 +35,16 @@ def vizres(fps):
     print('')
 
     return
+
+
+def _hash_gene(gene, length=6):
+    """Get the first letters of the SHA-1 digest of the gene."""
+
+    encoded = sum(
+        v * 4 ** i for i, v in enumerate(gene)
+    ).to_bytes(13, byteorder='big')
+    digest = hashlib.sha1(encoded).hexdigest()
+    return digest[0:length]
 
 
 def main():
