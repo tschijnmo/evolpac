@@ -60,7 +60,10 @@ def evolve(
         gene_idxes.sort(key=lambda x: scores[x])
 
         # Output.
-        if step_idx % out_steps == 0 or step_idx == total_steps - 1:
+        if_out = (out_prefix is not None and (
+            step_idx % out_steps == 0 or step_idx == total_steps - 1
+        ))
+        if if_out:
             out_idxes = np.array(gene_idxes[-out_num:])
             _dump_pop(
                 pop[out_idxes], scores[out_idxes],
