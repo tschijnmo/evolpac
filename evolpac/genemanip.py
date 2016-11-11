@@ -73,3 +73,8 @@ def get_gene_from_str(s):
     assert len(res) == GENE_LENGTH
     assert all(GENE_LOW <= i and i < GENE_HIGH for i in res)
     return res
+
+
+def form_gene_str(gene):
+    """Form the string form of a gene."""
+    return ''.join(str(i) for i in gen),

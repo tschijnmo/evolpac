@@ -9,7 +9,7 @@ import random
 import numpy as np
 
 from .genemanip import (
-    gen_random_gene, cross, mutate, GENE_LENGTH, GENE_DT
+    gen_random_gene, cross, mutate, GENE_LENGTH, GENE_DT, form_gene_str
 )
 
 
@@ -110,7 +110,7 @@ def _dump_pop(pop, scores, file_name, eval_cb=None):
     res = [
         {
             'gene': list(int(i) for i in gen),
-            'gene_str': ''.join(str(i) for i in gen),
+            'gene_str': form_gene_str(gen),
             'score': float(sco),
             'eval': float(eva)
         }
