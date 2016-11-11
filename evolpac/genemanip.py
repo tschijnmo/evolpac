@@ -77,4 +77,4 @@ def get_gene_from_str(s):
 
 def form_gene_str(gene):
     """Form the string form of a gene."""
-    return ''.join(str(i) for i in gen),
+    return ''.join(str(i) for i in gene),
