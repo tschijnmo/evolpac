@@ -5,7 +5,6 @@ import random
 import numpy as np
 import numpy.random as nprandom
 
-
 GENE_LOW = 0
 GENE_HIGH = 4
 GENE_BITS = (0, 1, 2, 3)
@@ -71,7 +70,7 @@ def get_gene_from_str(s):
     """Generates a gene value from a string."""
     res = [int(i) for i in s]
     assert len(res) == GENE_LENGTH
-    assert all(GENE_LOW <= i and i < GENE_HIGH for i in res)
+    assert all(GENE_LOW <= i < GENE_HIGH for i in res)
     return res
 
 
