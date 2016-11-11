@@ -7,14 +7,14 @@ high-level jobs.
 
 """
 
-from evolpac.avescore import compute_cross_ave_score
+from evolpac.duel import run_tournament
 
 from evolpac.evolve import evolve
 from evolpac.genemanip import form_gene_str, write_gene_strs
 
 
 def form_pool(num, out_fp,
-              pop_size=100, evol_steps=200, score_cb=compute_cross_ave_score,
+              pop_size=100, evol_steps=200, score_cb=run_tournament,
               **kwargs):
     """Form a pool of winners from random initial pool."""
 
