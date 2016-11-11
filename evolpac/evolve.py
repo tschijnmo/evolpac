@@ -43,6 +43,7 @@ def evolve(
         init = []
     for i, j in itertools.zip_longest(range(pop_size), init):
         pop[i] = j if j is not None else gen_random_gene()
+    out_idxes = np.arange(out_num)
 
     # Convert the ratios to integral numbers.
     select_num = int(pop_size * select_ratio)
@@ -60,11 +61,11 @@ def evolve(
         gene_idxes.sort(key=lambda x: scores[x])
 
         # Output.
+        out_idxes = np.array(gene_idxes[-out_num:])
         if_out = (out_prefix is not None and (
             step_idx % out_steps == 0 or step_idx == total_steps - 1
         ))
         if if_out:
-            out_idxes = np.array(gene_idxes[-out_num:])
             _dump_pop(
                 pop[out_idxes], scores[out_idxes],
                 '-'.join([out_prefix, str(step_idx)]),
@@ -95,7 +96,7 @@ def evolve(
         assert len(gene_idxes) == 0
         continue
 
-    return None
+    return list(pop[out_idxes])
 
 
 def _dump_pop(pop, scores, file_name, eval_cb=None):
