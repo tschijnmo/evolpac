@@ -77,3 +77,19 @@ def get_gene_from_str(s):
 def form_gene_str(gene):
     """Form the string form of a gene."""
     return ''.join(str(i) for i in gene),
+
+
+def write_gene_strs(gene_strs, fp):
+    """Write simple gene strings to a file."""
+    print('\n'.join(gene_strs), file=fp, flush=True)
+
+
+def read_gene_strs(fp):
+    """Read genes from a file containing a gene string on each line."""
+    genes = []
+    for line in fp:
+        line = line.strip()
+        if len(line) > 0 and line[0] != '#':
+            genes.append([int(i) for i in line])
+        continue
+    return genes
