@@ -14,7 +14,7 @@ from .genemanip import (
 
 
 def evolve(
-        pop_size, total_steps, score_cb, init=None,
+        pop_size, total_steps, score_cb, init=None, gene_db=None,
         select_ratio=0.4, new_ratio=0.1,
         breed_new_ratio=0.05, n_cross_pts=1,
         mutate_prob=0.001, n_mutate_pts=1,
@@ -42,7 +42,7 @@ def evolve(
     if init is None:
         init = []
     for i, j in itertools.zip_longest(range(pop_size), init):
-        pop[i] = j if j is not None else gen_random_gene()
+        pop[i] = j if j is not None else gen_random_gene(gene_db=gene_db)
     out_idxes = np.arange(out_num)
 
     # Convert the ratios to integral numbers.
@@ -79,7 +79,7 @@ def evolve(
         # Add the new blood.
         for i in range(new_num):
             idx = gene_idxes.pop()
-            pop[idx] = gen_random_gene()
+            pop[idx] = gen_random_gene(gene_db=gene_db)
             if i < breed_new_num:
                 parents.append(idx)
 
