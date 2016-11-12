@@ -59,11 +59,14 @@ def mutate(gene, n_pts=1):
     return gene
 
 
-def gen_random_gene():
+def gen_random_gene(gene_db=None):
     """Generate a random gene."""
-    return nprandom.randint(
-        GENE_LOW, GENE_HIGH, size=GENE_LENGTH, dtype=GENE_DT
-    )
+    if gene_db is None:
+        return nprandom.randint(
+            GENE_LOW, GENE_HIGH, size=GENE_LENGTH, dtype=GENE_DT
+        )
+    else:
+        return random.choice(gene_db)
 
 
 def get_gene_from_str(s):
