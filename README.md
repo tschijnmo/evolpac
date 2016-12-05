@@ -23,7 +23,7 @@ compiler is required to support the `-fopenmp` compiler flag.  Then by running
 `python3 setup.py install`, the code can be installed.  Then a simple Python
 code like,
 
-```
+```Py
 import evolpac
 ```
 
@@ -87,7 +87,7 @@ pool of genes with relatively good quality.  Then later random generation of
 genes could just pull a random gene from this pool.  This can be achieved by the
 following Python code.
 
-```
+```Py
 from evolpac.drivers import form_pool
 
 with open('pool.txt', 'w') as out_fp:
@@ -98,7 +98,7 @@ which will attempt to generate a pool of 3000 genes, each of which are the
 winners among a random population 600 genes evolved by 100 steps.  Next, we can
 run a real long evolution by the following code,
 
-```
+```Py
 from evolpac.duel import run_tournament, eval_w_sample
 from evolpac.evolve import evolve
 from evolpac.genemanip import gen_random_gene, get_gene_from_str, read_gene_strs
